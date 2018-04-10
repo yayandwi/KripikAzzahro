@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Kripik Azzahro</string>
+    <string name="slogan">Kripik Pisang Azzahro merupakan kripik pisang dengan varian rasa manis dan asin.Setiap varian kripik memiliki kelezatan dan kenikmatan tersendiri</string>
+    <string name="title_activity_menu_utama">menu_utama</string>
+    <string name="title_activity_menu">menu</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="tentang">Kripik Pisang Toklek “Azzahro” adalah sebuah usaha yang khususnya memproduksi pisang toklek. Awal Kripik Pisang Toklek “Azzahro” ini dibuat pada tanggal 24 Juli 2016, dan mulai dipasarkan di tempat sekolah dan  arisan. Pada bulan juli 2017 produk ini memenangkan sebuah lomba di tingkat Desa, maka dari situ usaha ini dikenal di Desa Sendangsari, Kecamatan Pengasih, Kabupaten Kulon Progo.
+Sekarang produk tersebut tidak hanya dipasarkan di tempat sekolah atau arisan saja, tetapi di tempat-tempat rumah makan dan juga dapat pemesanan dari konsumen maupun dari desa lain yang ada disekitar Kecamatan Pengasih, Kabupaten Kulon Progo.
+</string>
+    <string name="action_settings">Settings</string>
+
+
+    <string-array name="provinsi">
+        <item name = "yayan">DKI Jakarta</item>
+        <item>Yogyakarta</item>
+        <item>Jawa Barat</item>
+        <item>Jawa Tengah</item>
+        <item>Jawa Timur</item>
+    </string-array>
+
+
+</resources>

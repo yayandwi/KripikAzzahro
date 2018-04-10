@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "762259002935",
+    "firebase_url": "https://kripik-pisang.firebaseio.com",
+    "project_id": "kripik-pisang",
+    "storage_bucket": "kripik-pisang.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:762259002935:android:827174d2595fbc0e",
+        "android_client_info": {
+          "package_name": "com.yayan.kripikazzahro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "762259002935-d42birajt6qe5hs3cqe62o4loljqss8v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yayan.kripikazzahro",
+            "certificate_hash": "e9a38360df46abfc40f0ece52eb79f4ce102097b"
+          }
+        },
+        {
+          "client_id": "762259002935-c7nukj6u26doiv6g8ac6aumcc93j2irb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACdhQHk8A5Zx9kz1Lr0o57wQmfGj53as4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "762259002935-c7nukj6u26doiv6g8ac6aumcc93j2irb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

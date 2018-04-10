@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/home"
+            android:icon="@drawable/home"
+            android:title="Home"
+            android:fontFamily="sans-serif-condensed"/>
+        <item
+            android:id="@+id/petunjuk"
+            android:icon="@drawable/petunjuk"
+            android:title="Panduan Aplikasi"
+            android:fontFamily="sans-serif-condensed"/>
+
+
+        <item
+            android:id="@+id/produk"
+            android:icon="@drawable/product"
+            android:title="Produk Kripik"
+            android:fontFamily="sans-serif-condensed"/>
+        <item
+
+            android:id="@+id/order"
+            android:icon="@drawable/order"
+            android:title="Order"
+            android:fontFamily="sans-serif-condensed"/>
+
+        <item
+
+            android:id="@+id/cek"
+            android:icon="@drawable/cek"
+            android:title="Cek Ongkir JNE"
+            android:fontFamily="sans-serif-condensed"/>
+    </group>
+
+    <item android:title="Tentang Kripik Pisang Azzahro">
+        <menu>
+            <item
+                android:id="@+id/lokasi"
+                android:icon="@drawable/lokasi"
+                android:title="Lokasi Kripik Azzahro"
+                android:fontFamily="sans-serif-condensed"/>
+            <item
+                android:id="@+id/info"
+                android:icon="@drawable/inf"
+                android:title="Info Aplikasi"
+                android:fontFamily="sans-serif-condensed"/>
+            <item
+                android:id="@+id/keluar"
+                android:icon="@drawable/keluar"
+                android:title="Keluar"
+                android:fontFamily="sans-serif-condensed"/>
+        </menu>
+    </item>
+
+</menu>

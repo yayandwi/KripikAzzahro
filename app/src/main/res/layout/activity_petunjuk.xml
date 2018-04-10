@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/back"
+    tools:context="com.yayan.kripikazzahro.Petunjuk">
+
+
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="8dp">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/vertical_margin"
+            android:orientation="vertical"
+            android:weightSum="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Panduan Penggunaan aplikasi Kripik Pisang Azzahro"
+                android:textAlignment="center"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/vertical_margin"
+                android:text="Aplikasi Diet Sehat Bertipe Genotipe adalah aplikasi yang bertujuan untuk memudahkan orang dalam melakukan diet sehat sesuai dengan genotipe user , dengan adanya aplikasi ini diharapkan pengguna aplikasi dapat mengetahui bagai mana menentukan diet sehat sesuai dengan genotipe . \n\nUntuk dapat mengetahui cara diet sehat sesuai genotipe dengan menggunakan aplikasi ini sangatlah mudah. \n\nBerikut cara-cara penggunaan untuk mengetahui diet sehat sesuai genotipe sebagai berikut : "
+                android:textAlignment="inherit"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/vertical_margin"
+                android:text="- Membuka Aplikasi "
+                android:textAlignment="inherit"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="wrap_content"
+                android:layout_height="339dp"
+                android:layout_marginBottom="@dimen/small_margin"
+                android:layout_marginTop="@dimen/vertical_margin"
+                android:src="@drawable/p_satu"
+                android:layout_weight="0.20" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/vertical_margin"
+                android:text="Untuk menjalankan aplikasi sistem pakar ini pengguna perlu menekan icon aplikasi yang muncul di layar handphone pengguna, seperti pada gambar di atas. "
+                android:textAlignment="inherit"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/vertical_margin"
+                android:text="- Memilih salah satu menu "
+                android:textAlignment="inherit"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="339dp"
+                android:layout_marginBottom="@dimen/small_margin"
+                android:layout_marginTop="@dimen/vertical_margin"
+                android:src="@drawable/p_menu" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/vertical_margin"
+                android:text="Setelah aplikasi terbuka, maka pengguna akan masuk ke menu utama aplikasi, pada menu ini terdapat beberapa menu aplikasi mulai dari memulai sistem pakar diet sehat bertipe genotipe, cara penggunaan aplikasi sampai tentang aplikasi ini."
+                android:textAlignment="inherit"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/vertical_margin"
+                android:text="- Memulai sistem pakar diet sehat bertipe genotipe "
+                android:textAlignment="inherit"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="339dp"
+                android:layout_marginBottom="@dimen/small_margin"
+                android:layout_marginTop="@dimen/vertical_margin"
+                android:src="@drawable/p_pkar" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/vertical_margin"
+                android:text="Untuk dapat menentukan diet sehat sehat sesuai dengan genotipe, pengguna harus menjawab ya atau tidak pertanyaan-pertanyaan yang sudah tertera, setelah semua pertayaan di jawab maka pengguna akan mendapatkan jawaban tentang jenis tipe diet sesuai dengan genotipe."
+                android:textAlignment="inherit"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/vertical_margin"
+                android:text="- Hasil dan saran diet sehat bertipe genotipe "
+                android:textAlignment="inherit"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="339dp"
+                android:layout_marginBottom="@dimen/small_margin"
+                android:layout_marginTop="@dimen/vertical_margin"
+                android:src="@drawable/p_hasil" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:layout_marginTop="@dimen/vertical_margin"
+                android:text="Setelah pengguna selesai menjawab semua pertanyaan yang ada pada menu mulai sistem pakar maka akan tampil menu hasil dan saran, pada menu ini akan di jelaskan genotipe diet yang sesuai dengan user dan saran ."
+                android:textAlignment="inherit"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="@dimen/vertical_margin"
+                android:text="Setelah melakukan pemesanan dan tranfer segera hubungi penjual untuk memberikan bukti foto tranfer dengan menekan no.whats ap dibawah ini "
+                android:textAlignment="inherit"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/link_wa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/vertical_margin"
+
+                    android:text=" 082325130837 "
+                    android:textAlignment="inherit"
+                    android:textColor="@android:color/white"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="@dimen/vertical_margin"
+                android:text="          "
+                android:textAlignment="inherit"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+
+    </android.support.v4.widget.NestedScrollView>
+
+
+
+</RelativeLayout>

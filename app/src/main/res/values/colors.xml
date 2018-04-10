@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#ff8640</color>
+    <color name="colorPrimaryDark">#f46411</color>
+    <color name="colorAccent">#edd446</color>
+    <color name="ungu">#8616cc</color>
+
+    <color name="colorGray">#EBEBEB</color>
+
+    <color name="colorblack">#060606</color>
+    <color name="colorOrange">#ff8640</color>
+    <color name="btnSigUp">#c6a92a</color>
+    <color name="btnSigAktive">#177039</color>
+
+    <color name="olerlaybackground">#7f333639</color>
+    <color name="overlayBAr">#0e0d0e</color>
+    <color name="colorwhite">#fffeff</color>
+
+</resources>
