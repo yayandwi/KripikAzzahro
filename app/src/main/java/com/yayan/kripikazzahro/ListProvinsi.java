@@ -341,7 +341,6 @@ public class ListProvinsi extends AppCompatActivity {
                 Toast.makeText(ListProvinsi.this, "Message : Error " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
     public void getCity(String id_province) {
