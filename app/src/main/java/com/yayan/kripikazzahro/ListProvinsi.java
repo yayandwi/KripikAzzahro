@@ -332,7 +332,6 @@ public class ListProvinsi extends AppCompatActivity {
                     String error = "Error Retrive Data from Server !!!";
                     Toast.makeText(ListProvinsi.this, error, Toast.LENGTH_SHORT).show();
                 }
-
             }
 
             @Override
