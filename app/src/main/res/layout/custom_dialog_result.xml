@@ -7,7 +7,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        android:background="@color/colorPrimary"/>
+        android:background="@color/colorPrimary" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,9 +30,9 @@
             android:textSize="12sp" />
 
         <TextView
-            android:layout_marginTop="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:text="Destination"
             android:textColor="@android:color/black" />
 
@@ -45,9 +45,9 @@
             android:textSize="12sp" />
 
         <TextView
-            android:layout_marginTop="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:text="Expedisi"
             android:textColor="@android:color/black" />
 
@@ -60,9 +60,9 @@
             android:textSize="12sp" />
 
         <TextView
-            android:layout_marginTop="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:text="Cost (Rp)"
             android:textColor="@android:color/black" />
 
@@ -75,9 +75,9 @@
             android:textSize="12sp" />
 
         <TextView
-            android:layout_marginTop="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:text="Time (Days)"
             android:textColor="@android:color/black" />
 
@@ -89,20 +89,26 @@
             android:text="Value"
             android:textSize="12sp" />
 
-
-
     </LinearLayout>
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="154dp"
-        android:layout_height="wrap_content"
-        android:text="Pilih" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="154dp"
-        android:layout_height="wrap_content"
-        android:text="Tidak" />
+        <Button
+            android:id="@+id/btn_tidak"
+            android:layout_width="154dp"
+            android:layout_height="wrap_content"
+            android:text="Tidak" />
+
+        <Button
+            android:id="@+id/btn_pilih"
+            android:layout_width="154dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:text="Pilih" />
+
+    </RelativeLayout>
 
 </LinearLayout>

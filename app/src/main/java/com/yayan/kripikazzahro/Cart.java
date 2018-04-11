@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -24,6 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.yayan.kripikazzahro.Database.Database;
+import com.yayan.kripikazzahro.Model.MessageEvent;
 import com.yayan.kripikazzahro.Model.Ongkir;
 import com.yayan.kripikazzahro.Model.Order;
 import com.yayan.kripikazzahro.Model.Request;
@@ -32,6 +34,9 @@ import com.yayan.kripikazzahro.ViewHolder.CartAdapter;
 import com.yayan.kripikazzahro.ViewHolder.OngkirViewHolder;
 import com.yayan.kripikazzahro.common.Common;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,6 +47,7 @@ import java.util.ArrayList;
 import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
+
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
@@ -56,10 +62,10 @@ public class Cart extends AppCompatActivity {
     RecyclerView.LayoutManager layoutManager;
 
     FirebaseDatabase database;
-    DatabaseReference requests,ongkir;
+    DatabaseReference requests, ongkir;
 
     TextView txtTotalPrice, txtOngkir, txtTotalBelanja;
-    FButton btnPlace,btnOngkir;
+    FButton btnPlace, btnOngkir;
 
     List<Order> cart = new ArrayList<>();
     CartAdapter adapter;
@@ -67,16 +73,13 @@ public class Cart extends AppCompatActivity {
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-
     }
-
-
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        EventBus.getDefault().register(this); // Eventbus
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
                 .setDefaultFontPath("fonts/ColabLig.otf")
                 .setFontAttrId(R.attr.fontPath)
@@ -87,29 +90,29 @@ public class Cart extends AppCompatActivity {
         //Firebase
 
         database = FirebaseDatabase.getInstance();
-        requests=database.getReference("Requests");
+        requests = database.getReference("Requests");
 
         //Inisialisasi
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        recyclerView = (RecyclerView)findViewById(R.id.listCart);
+        recyclerView = findViewById(R.id.listCart);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        txtTotalPrice = (TextView)findViewById(R.id.total);
-        txtOngkir = (TextView)findViewById(R.id.ongkir);
-        txtTotalBelanja = (TextView)findViewById(R.id.totalBelanja);
-        btnPlace = (FButton)findViewById(R.id.btnPlaceOrder);
-        btnOngkir = (FButton)findViewById(R.id.btnCekOngkir);
+        txtTotalPrice = findViewById(R.id.total);
+        txtOngkir = findViewById(R.id.ongkir);
+        txtTotalBelanja = findViewById(R.id.totalBelanja);
+        btnPlace = findViewById(R.id.btnPlaceOrder);
+        btnOngkir = findViewById(R.id.btnCekOngkir);
 
         btnPlace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                if(cart.size() > 0)
+                if (cart.size() > 0)
 
                     showAlertDialog();
                 else
@@ -119,17 +122,29 @@ public class Cart extends AppCompatActivity {
         });
 
         loadListFood();
-
         btnOngkir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent Ongkirku = new Intent(Cart.this,ListProvinsi.class);
+                Intent Ongkirku = new Intent(Cart.this, ListProvinsi.class);
                 startActivity(Ongkirku);
             }
         });
-
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this); // Eventbus
+    }
+
+    // This method will be called when a MessageEvent is posted (in the UI thread for Toast)
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(MessageEvent event) {
+        Log.e("EVENTBUS", event.toString());
+        Locale locale = new Locale("in", "ID");
+        NumberFormat fmt = NumberFormat.getCurrencyInstance(locale);
+        txtOngkir.setText(String.valueOf(fmt.format(event.getOngkir())));
+    }
 
     private void showAlertDialog() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(Cart.this);
@@ -162,16 +177,12 @@ public class Cart extends AppCompatActivity {
                 //Tambah ke Firebase request
                 //jika akan memakai system.currentMill dengan key
                 // String order_number = );
-                requests.child(String.valueOf(System.currentTimeMillis()))
-                        .setValue(request);
+                requests.child(String.valueOf(System.currentTimeMillis())).setValue(request);
                 //hapus Keranjang
                 new Database(getBaseContext()).cleanCart();
 
-
-
                 Toast.makeText(Cart.this, "Terima Kasih Sudah berbelanja,Pesanan Anda Akan Segera Dikirim", Toast.LENGTH_SHORT).show();
                 finish();
-
             }
         });
 
@@ -183,7 +194,6 @@ public class Cart extends AppCompatActivity {
             }
         });
         alertDialog.show();
-
     }
 
     //  private void sendNotificationOrder(String order_number) {
@@ -208,48 +218,46 @@ public class Cart extends AppCompatActivity {
 
     private void loadListFood() {
         cart = new Database(this).getCart();
-        adapter = new CartAdapter(cart,this);
+        adapter = new CartAdapter(cart, this);
         adapter.notifyDataSetChanged();
         recyclerView.setAdapter(adapter);
 
         int totalWeight = 0;
-        for (Order item: cart) {
+        for (Order item : cart) {
             totalWeight = totalWeight + (Integer.parseInt(item.getBerat()) * Integer.parseInt(item.getQuantity()));
         }
 
         //kalkluasi ongkir
         int ongkir = 0;
         try {
-            ongkir = getOngkir(501, 114, totalWeight, "jne");
+            ongkir = getOngkir(501, 501, totalWeight, "jne");
         } catch (IOException e) {
             e.printStackTrace();
-        }catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
-
-
 
 
         //kalkulasi perhitungan pembelian
 
         int total = 0;
-        for(Order order:cart)
-            total+=(Integer.parseInt(order.getPrice()))*(Integer.parseInt(order.getQuantity()));
+        for (Order order : cart)
+            total += (Integer.parseInt(order.getPrice())) * (Integer.parseInt(order.getQuantity()));
 
-        Locale locale = new Locale("in","ID");
+        Locale locale = new Locale("in", "ID");
         NumberFormat fmt = NumberFormat.getCurrencyInstance(locale);
 
         int totalBelanja = total + ongkir;
 
         txtTotalPrice.setText(fmt.format(total));
         txtOngkir.setText(String.valueOf(fmt.format(ongkir)));
-      txtTotalBelanja.setText(String.valueOf(fmt.format(totalBelanja)));
+        txtTotalBelanja.setText(String.valueOf(fmt.format(totalBelanja)));
 
     }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        if(item.getTitle().equals(Common.DELETE))
+        if (item.getTitle().equals(Common.DELETE))
             deleteCart(item.getOrder());
         return true;
     }
@@ -257,19 +265,16 @@ public class Cart extends AppCompatActivity {
     private void deleteCart(int posotion) {
         cart.remove(posotion);
         new Database(this).cleanCart();
-        for(Order item:cart)
+        for (Order item : cart)
             new Database(this).addToCart(item);
 
         loadListFood();
-
-
     }
 
     private int getOngkir(int origin, int destionation, int weight, String courier) throws IOException, JSONException {
         OkHttpClient client = new OkHttpClient();
-
         MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
-        RequestBody body = RequestBody.create(mediaType, "origin="+origin+"&destination="+destionation+"&weight="+weight+"&courier="+courier);
+        RequestBody body = RequestBody.create(mediaType, "origin=" + origin + "&destination=" + destionation + "&weight=" + weight + "&courier=" + courier);
         okhttp3.Request request = new okhttp3.Request.Builder()
                 .url("https://api.rajaongkir.com/starter/cost")
                 .post(body)
@@ -287,9 +292,6 @@ public class Cart extends AppCompatActivity {
         int value = cost.getJSONObject(0).getInt("value");
         return value;
     }
-
-
-
 }
 
 

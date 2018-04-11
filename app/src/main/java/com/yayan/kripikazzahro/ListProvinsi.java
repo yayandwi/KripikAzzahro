@@ -18,6 +18,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.yayan.kripikazzahro.Model.MessageEvent;
 import com.yayan.kripikazzahro.adapter.CityAdapter;
 import com.yayan.kripikazzahro.adapter.ExpedisiAdapter;
 import com.yayan.kripikazzahro.adapter.ProvinceAdapter;
@@ -30,6 +31,7 @@ import com.yayan.kripikazzahro.Model.province.ItemProvince;
 import com.yayan.kripikazzahro.Model.province.Result;
 import com.google.gson.Gson;
 
+import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,25 +68,20 @@ public class ListProvinsi extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_provinsi);
 
-
-        etToProvince = (EditText) findViewById(R.id.etToProvince);
-        etToCity = (EditText) findViewById(R.id.etToCity);
-
-        etCourier = (EditText) findViewById(R.id.etCourier);
-
+        etToProvince = findViewById(R.id.etToProvince);
+        etToCity = findViewById(R.id.etToCity);
+        etCourier = findViewById(R.id.etCourier);
 
         etToProvince.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 popUpProvince(etToProvince, etToCity);
-
             }
         });
 
         etToCity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 try {
                     if (etToProvince.getTag().equals("")) {
                         etToProvince.setError("Please chooise your to province");
@@ -95,7 +92,6 @@ public class ListProvinsi extends AppCompatActivity {
                 } catch (NullPointerException e) {
                     etToProvince.setError("Please chooise your to province");
                 }
-
             }
         });
 
@@ -105,50 +101,29 @@ public class ListProvinsi extends AppCompatActivity {
                 popUpExpedisi(etCourier);
             }
         });
-
-        Button btnProcess = (Button) findViewById(R.id.btnpilih);
+        Button btnProcess = findViewById(R.id.btnpilih);
         btnProcess.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 String destination = etToCity.getText().toString();
-
                 String expedisi = etCourier.getText().toString();
-
                 if (destination.equals("")) {
                     etToCity.setError("Please input your destination");
-
                 } else if (expedisi.equals("")) {
                     etCourier.setError("Please input your ItemExpedisi");
                 } else {
-
                     progressDialog = new ProgressDialog(ListProvinsi.this);
                     progressDialog.setMessage("Please wait..");
                     progressDialog.show();
-                    getCoast(
-
-                            etToCity.getTag().toString(),
-
-                            etCourier.getText().toString()
-                    );
+                    // 501 adalah yogyakarta
+                    getCoast("501", etToCity.getTag().toString(), 501, expedisi);
                 }
-
-
-
             }
         });
-
-
-
-
     }
 
-
-    public void popUpProvince(final EditText etProvince, final EditText etCity ) {
-
+    public void popUpProvince(final EditText etProvince, final EditText etCity) {
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
         View alertLayout = inflater.inflate(R.layout.custom_dialog_search, null);
 
         alert = new AlertDialog.Builder(ListProvinsi.this);
@@ -159,11 +134,11 @@ public class ListProvinsi extends AppCompatActivity {
 
         ad = alert.show();
 
-        searchList = (EditText) alertLayout.findViewById(R.id.searchItem);
+        searchList = alertLayout.findViewById(R.id.searchItem);
         searchList.addTextChangedListener(new MyTextWatcherProvince(searchList));
         searchList.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
 
-        mListView = (ListView) alertLayout.findViewById(R.id.listItem);
+        mListView = alertLayout.findViewById(R.id.listItem);
 
         ListProvince.clear();
         adapter_province = new ProvinceAdapter(ListProvinsi.this, ListProvince);
@@ -189,15 +164,11 @@ public class ListProvinsi extends AppCompatActivity {
         progressDialog = new ProgressDialog(ListProvinsi.this);
         progressDialog.setMessage("Please wait..");
         progressDialog.show();
-
         getProvince();
-
     }
 
     public void popUpCity(final EditText etCity, final EditText etProvince) {
-
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
         View alertLayout = inflater.inflate(R.layout.custom_dialog_search, null);
 
         alert = new AlertDialog.Builder(ListProvinsi.this);
@@ -208,11 +179,11 @@ public class ListProvinsi extends AppCompatActivity {
 
         ad = alert.show();
 
-        searchList = (EditText) alertLayout.findViewById(R.id.searchItem);
+        searchList = alertLayout.findViewById(R.id.searchItem);
         searchList.addTextChangedListener(new MyTextWatcherCity(searchList));
         searchList.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
 
-        mListView = (ListView) alertLayout.findViewById(R.id.listItem);
+        mListView = alertLayout.findViewById(R.id.listItem);
 
         ListCity.clear();
         adapter_city = new CityAdapter(ListProvinsi.this, ListCity);
@@ -237,15 +208,11 @@ public class ListProvinsi extends AppCompatActivity {
         progressDialog.show();
 
         getCity(etProvince.getTag().toString());
-
     }
 
     public void popUpExpedisi(final EditText etExpedisi) {
-
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
         View alertLayout = inflater.inflate(R.layout.custom_dialog_search, null);
-
         alert = new AlertDialog.Builder(ListProvinsi.this);
         alert.setTitle("List Expedisi");
         alert.setMessage("select your Expedisi");
@@ -254,11 +221,11 @@ public class ListProvinsi extends AppCompatActivity {
 
         ad = alert.show();
 
-        searchList = (EditText) alertLayout.findViewById(R.id.searchItem);
+        searchList = alertLayout.findViewById(R.id.searchItem);
         searchList.addTextChangedListener(new MyTextWatcherCity(searchList));
         searchList.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
 
-        mListView = (ListView) alertLayout.findViewById(R.id.listItem);
+        mListView = alertLayout.findViewById(R.id.listItem);
 
         listItemExpedisi.clear();
         adapter_expedisi = new ExpedisiAdapter(ListProvinsi.this, listItemExpedisi);
@@ -378,7 +345,6 @@ public class ListProvinsi extends AppCompatActivity {
     }
 
     public void getCity(String id_province) {
-
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ApiUrl.URL_ROOT_HTTPS)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -386,11 +352,9 @@ public class ListProvinsi extends AppCompatActivity {
 
         ApiService service = retrofit.create(ApiService.class);
         Call<ItemCity> call = service.getCity(id_province);
-
         call.enqueue(new Callback<ItemCity>() {
             @Override
             public void onResponse(Call<ItemCity> call, Response<ItemCity> response) {
-
                 progressDialog.dismiss();
                 Log.v("wow", "json : " + new Gson().toJson(response));
 
@@ -431,26 +395,19 @@ public class ListProvinsi extends AppCompatActivity {
     }
 
     private void getExpedisi() {
-
-        ItemExpedisi itemItemExpedisi = new ItemExpedisi();
-
+        ItemExpedisi itemItemExpedisi;
         itemItemExpedisi = new ItemExpedisi("1", "pos");
         listItemExpedisi.add(itemItemExpedisi);
-        itemItemExpedisi = new ItemExpedisi("1", "tiki");
+        itemItemExpedisi = new ItemExpedisi("2", "tiki");
         listItemExpedisi.add(itemItemExpedisi);
-        itemItemExpedisi = new ItemExpedisi("1", "jne");
+        itemItemExpedisi = new ItemExpedisi("3", "jne");
         listItemExpedisi.add(itemItemExpedisi);
-
         mListView.setAdapter(adapter_expedisi);
-
         adapter_expedisi.setList(listItemExpedisi);
         adapter_expedisi.filter("");
-
     }
 
-    public void getCoast(String courier,
-                         String destination) {
-
+    public void getCoast(String origin, String destination, int weight, String courier) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ApiUrl.URL_ROOT_HTTPS)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -459,91 +416,81 @@ public class ListProvinsi extends AppCompatActivity {
         ApiService service = retrofit.create(ApiService.class);
         Call<ItemCost> call = service.getCost(
                 "a1db3093f82a112d84f38383f7119efb",
-
+                origin,
                 destination,
-
+                weight,
                 courier
         );
 
+        call.enqueue(new Callback<ItemCost>() {
+            @Override
+            public void onResponse(Call<ItemCost> call, final Response<ItemCost> response) {
+                Log.v("COST", "JSON : " + new Gson().toJson(response));
+                progressDialog.dismiss();
+                if (response.isSuccessful()) {
+                    int statusCode = response.body().getRajaongkir().getStatus().getCode();
+                    if (statusCode == 200) {
+                        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                        final View alertLayout = inflater.inflate(R.layout.custom_dialog_result, null);
+                        alert = new AlertDialog.Builder(ListProvinsi.this);
+                        alert.setTitle("Result Cost");
+                        alert.setMessage("this result your search");
+                        alert.setView(alertLayout);
+                        alert.setCancelable(true);
 
-            call.enqueue(new Callback<ItemCost>() {
-                @Override
-                public void onResponse(Call<ItemCost> call, final Response<ItemCost> response) {
+                        ad = alert.show();
+                        TextView tv_destination = alertLayout.findViewById(R.id.tv_destination);
+                        TextView tv_expedisi = alertLayout.findViewById(R.id.tv_expedisi);
+                        final TextView tv_coast = alertLayout.findViewById(R.id.tv_coast);
+                        TextView tv_time = alertLayout.findViewById(R.id.tv_time);
+                        Button btnPilih = alertLayout.findViewById(R.id.btn_pilih);
+                        Button btnTidak = alertLayout.findViewById(R.id.btn_tidak);
+                        btnTidak.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                ad.dismiss();
+                            }
+                        });
 
-                    Log.v("wow", "json : " + new Gson().toJson(response));
-                    progressDialog.dismiss();
+                        final ItemCost param = response.body();
+                        if (param != null) {
+                            if (param.getRajaongkir().getResults().size() != 0) {
+                                etToProvince.setText("");
+                                etToCity.setText("");
+                                etCourier.setText("");
 
-                    if (response.isSuccessful()) {
+                                tv_destination.setText(param.getRajaongkir().getDestinationDetails().getCityName() + " (Postal Code : " + response.body().getRajaongkir().getDestinationDetails().getPostalCode() + ")");
+                                tv_expedisi.setText(param.getRajaongkir().getResults().get(0).getCosts().get(0).getDescription() + " (" + response.body().getRajaongkir().getResults().get(0).getName() + ") ");
+                                tv_coast.setText("Rp. " + param.getRajaongkir().getResults().get(0).getCosts().get(0).getCost().get(0).getValue().toString());
+                                tv_time.setText(param.getRajaongkir().getResults().get(0).getCosts().get(0).getCost().get(0).getEtd() + " (Days)");
 
-                        int statusCode = response.body().getRajaongkir().getStatus().getCode();
-
-                        if (statusCode == 200){
-                            LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                            View alertLayout = inflater.inflate(R.layout.custom_dialog_result, null);
-                            alert = new AlertDialog.Builder(ListProvinsi.this);
-                            alert.setTitle("Result Cost");
-                            alert.setMessage("this result your search");
-                            alert.setView(alertLayout);
-                            alert.setCancelable(true);
-
-                            ad = alert.show();
-
-
-                            TextView tv_destination = (TextView) alertLayout.findViewById(R.id.tv_destination);
-                            TextView tv_expedisi = (TextView) alertLayout.findViewById(R.id.tv_expedisi);
-                            TextView tv_coast = (TextView) alertLayout.findViewById(R.id.tv_coast);
-                            TextView tv_time = (TextView) alertLayout.findViewById(R.id.tv_time);
-
-
-
-
-
-                            tv_destination.setText(response.body().getRajaongkir().getDestinationDetails().getCityName()+" (Postal Code : "+
-                                    response.body().getRajaongkir().getDestinationDetails().getPostalCode()+")");
-
-                            tv_expedisi.setText(response.body().getRajaongkir().getResults().get(0).getCosts().get(0).getDescription()+" ("+
-                                    response.body().getRajaongkir().getResults().get(0).getName()+") ");
-
-                            tv_coast.setText("Rp. "+response.body().getRajaongkir().getResults().get(0).getCosts().get(0).getCost().get(0).getValue().toString());
-
-                            tv_time.setText(response.body().getRajaongkir().getResults().get(0).getCosts().get(0).getCost().get(0).getEtd()+" (Days)");
-
-
-                            etToProvince.setText("");
-                            etToCity.setText("");
-
-                            etCourier.setText("");
-
-
-
-                        } else {
-
-                            String message = response.body().getRajaongkir().getStatus().getDescription();
-                            Toast.makeText(ListProvinsi.this, message, Toast.LENGTH_SHORT).show();
+                                btnPilih.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        Log.e("CLICK PILIH", "PILIH");
+                                        EventBus.getDefault().post(new MessageEvent(param.getRajaongkir().getResults().get(0).getCosts().get(0).getCost().get(0).getValue(), "Keterangan yang masuk"));
+                                        finish();
+                                    }
+                                });
+                            } else {
+                                Toast.makeText(ListProvinsi.this, "Ongkos kirim tidak ditemukan", Toast.LENGTH_SHORT).show();
+                            }
                         }
-
                     } else {
-                        String error = "Error Retrive Data from Server !!!";
-                        Toast.makeText(ListProvinsi.this, error, Toast.LENGTH_SHORT).show();
+                        String message = response.body().getRajaongkir().getStatus().getDescription();
+                        Toast.makeText(ListProvinsi.this, message, Toast.LENGTH_SHORT).show();
                     }
-
-                    //final TextView isi = (TextView) findViewById(R.id.isi);
-
-
-
+                } else {
+                    String error = "Error Retrive Data from Server !!!";
+                    Toast.makeText(ListProvinsi.this, error, Toast.LENGTH_SHORT).show();
                 }
+            }
 
-
-
-                @Override
-                public void onFailure(Call<ItemCost> call, Throwable t) {
-
-                    progressDialog.dismiss();
-                    Toast.makeText(ListProvinsi.this, "Message : Error " + t.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
-
-        }
-
-
+            @Override
+            public void onFailure(Call<ItemCost> call, Throwable t) {
+                progressDialog.dismiss();
+                Toast.makeText(ListProvinsi.this, "Message : Error " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
+}

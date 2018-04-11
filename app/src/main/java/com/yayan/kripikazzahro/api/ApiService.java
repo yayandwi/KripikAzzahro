@@ -33,6 +33,8 @@ public interface ApiService {
     @POST("cost")
     Call<ItemCost> getCost(@Field("key") String Token,
                            @Field("origin") String origin,
-                           @Field("destination") String destination);
+                           @Field("destination") String destination,
+                           @Field("weight") Integer weight,
+                           @Field("courier") String courier);
 
 }

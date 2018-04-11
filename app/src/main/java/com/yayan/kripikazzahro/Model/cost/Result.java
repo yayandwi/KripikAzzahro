@@ -19,7 +19,7 @@ public class Result {
     private String name;
     @SerializedName("costs")
     @Expose
-    private List<Cost> costs = null;
+    private List<Cost> costs;
 
     public Result(String code, String name, List<Cost> costs) {
         this.code = code;
